@@ -1,0 +1,32 @@
+<!-- editTaskFormPartial.ejs -->
+<h3>Editar tarea</h3>
+<form
+  method="POST"
+  action="/tareas/<%= task._id %>/edit?_method=PATCH"
+  class="d-inline"
+>
+  <div class="form-group">
+    <label for="editTitulo">Título</label>
+    <input
+      type="text"
+      class="form-control"
+      id="editTitulo"
+      name="titulo"
+      value="<%= task.titulo %>"
+    />
+  </div>
+  <div class="form-group">
+    <label for="editDescripcion">Descripción</label>
+    <textarea
+      class="form-control"
+      id="editDescripcion"
+      name="descripcion"
+      rows="3"
+    >
+<%= task.descripcion %></textarea
+    >
+  </div>
+  <button type="submit" class="btn btn-primary" id="saveChangesBtn">
+    Guardar Cambios
+  </button>
+</form>

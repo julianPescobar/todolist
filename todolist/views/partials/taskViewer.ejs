@@ -1,0 +1,57 @@
+<div class="container">
+  <h4>Lista de Tareas</h4>
+  <% if (tasks.length > 0) { %>
+  <ul class="list-group">
+    <% tasks.forEach(function(task) { %>
+    <li class="list-group-item">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4><%= task.titulo %></h4>
+          <p><%= task.descripcion %></p>
+        </div>
+        <div class="col-auto">
+          <!-- Botones en línea -->
+          <!-- Botón para marcar como completado con ícono de tilde -->
+          <form
+            method="POST"
+            action="/tareas/<%= task._id %>/done?_method=PATCH"
+            class="d-inline"
+          >
+            <button type="submit" class="btn btn-success">
+              <i class="fas fa-check"></i> Hecho!
+            </button>
+          </form>
+          <!-- Botón para editar con ícono de lápiz -->
+          <a href="/tareas/<%= task._id %>/edit" class="btn btn-warning mx-2">
+            <i class="fas fa-pencil-alt"></i> Editar
+          </a>
+          <!-- Botón para borrar con ícono de basura -->
+          <form
+            method="POST"
+            action="/tareas/<%= task._id %>/delete?_method=DELETE"
+            class="d-inline"
+          >
+            <button type="submit" class="btn btn-danger">
+              <i class="fas fa-trash-alt"></i> Borrar
+            </button>
+          </form>
+          <!-- Fin de los botones en línea -->
+        </div>
+      </div>
+    </li>
+    <% }); %>
+  </ul>
+  <% } else { %>
+  <ul class="list-group shadow-sm">
+    <li class="list-group-item bg-light text-muted">
+      <div class="row align-items-center">
+        <div class="col"></div>
+        <p class="text-gray text-center">
+          Esta desierto por aquí. Empieza por crear una tarea!
+        </p>
+      </div>
+    </li>
+  </ul>
+
+  <% } %>
+</div>

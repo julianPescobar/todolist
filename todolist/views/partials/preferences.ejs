@@ -1,0 +1,33 @@
+<h1>Preferencias de Usuario</h1>
+<form action="/update" method="POST">
+  <div class="form-group">
+    <label for="name">Nombre</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      name="name"
+      value="<%= user.name %>"
+    />
+  </div>
+  <div class="form-group">
+    <label for="email">Correo Electrónico</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      value="<%= user.email %>"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+<hr />
+<h2>Borrar Cuenta</h2>
+<p>
+  Al hacer clic en el botón "Borrar Cuenta", se eliminará permanentemente su
+  cuenta y todos los datos asociados.
+</p>
+<form action="/delete" method="POST">
+  <button type="submit" class="btn btn-danger">Borrar Cuenta</button>
+</form>

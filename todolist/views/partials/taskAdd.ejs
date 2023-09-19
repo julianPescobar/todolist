@@ -1,0 +1,38 @@
+<div class="container mt-1">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="text-center mb-4">
+        <h4>¡Hola, <%= name %>!</h4>
+        <p>Agrega una nueva tarea</p>
+      </div>
+      <form action="/tareas" method="POST">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Escribe aquí el título de la tarea..."
+            aria-label="TextoAgregar"
+            aria-describedby="basic-addon2"
+            name="titulo"
+            required
+          />
+        </div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Escribe aquí la descripción de la tarea..."
+            aria-label="DescripcionAgregar"
+            aria-describedby="basic-addon2"
+            name="descripcion"
+            required
+          />
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit">Agregar Tarea</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <%- include('taskViewer'); %>
+</div>

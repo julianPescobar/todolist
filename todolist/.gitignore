@@ -1,0 +1,36 @@
+# Dependency directories
+node_modules/
+# Environment variables file
+.env
+# Logs and temporary files
+*.log
+*.tmp
+# IDE/Editor-specific files
+.idea/
+.vscode/
+.sublime-project
+.sublime-workspace
+.suo
+.user
+# Compiled code and build artifacts
+/dist/
+/build/
+# Configuration files
+.babelrc
+.eslintrc
+.prettierrc
+.editorconfig
+.stylelintrc
+.sass-lint.yml
+# Database files
+.sqlite
+.db
+# System files
+.DS_Store
+Thumbs.db
+.cache/
+# Generated files
+/generated/
+/coverage/
+# User-specific files
+.env.local
