@@ -11,8 +11,11 @@ import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import methodOverride from "method-override";
 import dotenv from "dotenv";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swagger.js"; // Reemplaza con la ubicación de tu configuración
 // Creamos APP Express
 const app = express();
+app.use("/swagger-ui", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //Configuramos Dotenv
 dotenv.config();
@@ -107,13 +110,66 @@ app.use(methodOverride("_method"));
  */
 
 // ENDPOINTS LOGIN
+
+/**
+ * @swagger
+ * tags:
+ *   name: html
+ *   description: Endpoints que devuelven HTML
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: json
+ *   description: Endpoints que devuelven JSON
+ */
+/**
+ * @swagger
+ * /login:
+ *   get:
+ *     summary: Renderiza la pagina de login al cliente
+ *     tags:
+ *      - html
+ *     responses:
+ *       200:
+ *         description: Respuesta exitosa.
+ *       500:
+ *         description: Error del servidor.
+ */
 app
   .get("/login", (req, res) => {
     res.render("pages/login", { message: "" });
   })
+  /**
+   * @swagger
+   * /login:
+   *   post:
+   *     tags:
+   *      - html
+   *     summary: Inicia una sesion
+   *     description: Inicia sesión con un usuario y contraseña. Devuelve HTML
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/x-www-form-urlencoded:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 description: Email del usuario.
+   *               password:
+   *                 type: string
+   *                 description: Contraseña del usuario.
+   *     responses:
+   *       200:
+   *         description: Inicio de sesión exitoso.
+   *       400:
+   *         description: Datos de inicio de sesión inválidos.
+   */
   .post("/login", async (req, res) => {
     const { email, password } = req.body;
-
+    console.log(email, password);
     try {
       // Buscar al usuario por su correo electrónico en la base de datos
       const user = await Usuario.findOne({ email });
