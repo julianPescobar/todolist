@@ -1,7 +1,7 @@
 # todolist
 This is yet another todo list but this one is made with pure javascript using Node, Express, MongoDB and EJS (templating engine).
 # Features
-* It has a simple authentication with PassportJS using LocalStrategy
+* Implements Basuc Authentication with PassportJS using LocalStrategy
 * The user and task model was made with mongoose, which then applies the schema on mongodb
 * Password is stored encrypted on your mongodb collection
 * You can do the usual CRUD stuff with tasks
