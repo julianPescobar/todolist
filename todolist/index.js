@@ -13,6 +13,8 @@ import methodOverride from "method-override";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger.js"; // Reemplaza con la ubicación de tu configuración
+import GoogleStrategy from "passport-google-oauth20";
+import axios from "axios";
 // Creamos APP Express
 const app = express();
 app.use("/swagger-ui", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -69,8 +71,8 @@ mongoose
   .catch((error) => {
     console.error("Error de conexión a MongoDB:", error);
   });
-
 // Middlewares de sesión
+
 app.use(
   session({
     secret: process.env.SECRETOSESSION,
@@ -82,7 +84,9 @@ app.use(
   })
 );
 
-// Middleware de autenticación
+app.use(passport.initialize());
+app.use(passport.session());
+// Middleware de authentication
 // Esto hace que por cada request donde inyectemos esta funcion, valide si tiene
 // una sesion valida activa, en caso de no tenerlo, redirige a login.
 function authorize(req, res, next) {
@@ -97,10 +101,54 @@ function authorize(req, res, next) {
 }
 // Configuración de Passport.js
 passport.use(new LocalStrategy(Usuario.authenticate()));
-passport.serializeUser(Usuario.serializeUser());
-passport.deserializeUser(Usuario.deserializeUser());
-app.use(passport.initialize());
-app.use(passport.session());
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await Usuario.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:8000/auth/google/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        // Busca un usuario existente por su identificador de Google
+        let user = await Usuario.findOne({ googleId: profile.id });
+
+        // Si se encuentra un usuario, simplemente devuelve ese usuario
+        if (user) {
+          return done(null, user);
+        }
+
+        const newUser = new Usuario({
+          googleId: profile.id,
+          name: `${profile.displayName}`,
+          isVerified: true,
+
+          // Otros campos que quieras asignar al nuevo usuario
+        });
+
+        user = await newUser.save();
+
+        // Devuelve el nuevo usuario creado
+        done(null, user);
+      } catch (err) {
+        done(err);
+      }
+    }
+  )
+);
 
 // Empleamos un metodo para overridear POST por PATCH/DELETE
 app.use(methodOverride("_method"));
@@ -202,6 +250,20 @@ app
       });
     }
   });
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/");
+  }
+);
 
 // ENDPOINTS REGISTRARSE
 app

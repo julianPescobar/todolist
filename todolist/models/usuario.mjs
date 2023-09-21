@@ -10,12 +10,12 @@ const usuarioSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   verificationCode: {
@@ -25,6 +25,10 @@ const usuarioSchema = new Schema({
   isVerified: {
     type: Boolean,
     default: false,
+  },
+  googleId: {
+    type: Number,
+    required: false,
   },
 });
 // Utiliza passportLocalMongoose para simplificar la autenticación local
