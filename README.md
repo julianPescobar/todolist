@@ -2,6 +2,7 @@
 This is yet another todo list but this one is made with pure javascript using Node, Express, MongoDB and EJS (templating engine).
 # Features
 * Implements Basic Authentication with PassportJS using LocalStrategy
+* Implements OAuth2.0 Authentication for logging in with a Google account.
 * The user and task model was made with mongoose, which then applies the schema on mongodb
 * Password is stored encrypted on your mongodb collection
 * You can do the usual CRUD stuff with tasks
