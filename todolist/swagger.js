@@ -9,7 +9,7 @@ const options = {
     },
   },
   // Path para encontrar los archivos con anotaciones Swagger
-  apis: ["./index.js"], // Reemplaza con la ubicación de tus rutas
+  apis: ["./routes/*"], // Reemplaza con la ubicación de tus rutas
 };
 
 const swaggerSpec = swaggerJSDoc(options);
