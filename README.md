@@ -14,3 +14,10 @@ This is yet another todo list but this one is made with pure javascript using No
 # What should I do to make it work?
 You should firstly npm install everything, then set up your own .env file with your own port, mongodb connection string and session secret.
 then just nodemon index.js
+### Env file looks like this:
+PUERTO -> the port you're listening in your app <br>
+MONGO -> your mongodb database url <br>
+SECRETOSESSION -> your passport secret <br>
+GOOGLE_CLIENT_ID -> your google oauth2 client id <br>
+GOOGLE_CLIENT_SECRET -> your google oauth2 secret <br>
+APPURL -> your app's url (example https://localhost, https://milanesas.org) <br>
